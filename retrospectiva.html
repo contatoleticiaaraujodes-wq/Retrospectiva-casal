@@ -100,7 +100,7 @@
         </div>
     </div>
     <audio id="bgMusic" src="https://soundhelix.com" loop></audio>
-              <script>
+        <script>
         document.getElementById('anoAtual').innerText = new Date().getFullYear();
         const params = new URLSearchParams(window.location.search);
         const nome1 = params.get('n1') || "Eu";
@@ -115,22 +115,20 @@
         document.getElementById('txtLetra').innerText = `"${letraMusica}"`;
         document.getElementById('txtMensagem').innerText = mensagem;
         document.getElementById('widgetMusica').innerText = `História de ${nome1} & ${nome2}`;
-        
         if (fotoUrl && fotoUrl.trim() !== "") {
             const imgElement = document.getElementById('imgCasal');
             imgElement.src = decodeURIComponent(fotoUrl);
             imgElement.style.display = 'block';
         }
         
-        // CÁLCULO CORRIGIDO: Força a comparação exata desconsiderando horas e fusos
         if (dataInicio) {
-            // Divide a data do formulário (ano-mes-dia)
             const partes = dataInicio.split('-'); 
-            // Cria a data inicial usando o fuso local do dispositivo
-            const dataObjeto = new Date(partes[0], partes[1] - 1, partes[2]); 
+            const ano = parseInt(partes[0], 10);
+            const mes = parseInt(partes[1], 10) - 1;
+            const dia = parseInt(partes[2], 10);
+            const dataObjeto = new Date(ano, mes, dia); 
             
             const hoje = new Date();
-            // Zera as horas de hoje para comparar apenas os dias cheios
             const hojeZerado = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
             
             const diferencaBruta = hojeZerado.getTime() - dataObjeto.getTime();
@@ -145,7 +143,6 @@
         let progressInterval;
         let startTime;
         const progressContainer = document.getElementById('progressContainer');
-        
         slides.forEach((_, i) => {
             const bar = document.createElement('div');
             bar.className = 'progress-bar';
@@ -156,7 +153,7 @@
         function startWrapped() {
             document.getElementById('startScreen').style.display = 'none';
             const audio = document.getElementById('bgMusic');
-            if(audio) { audio.play().catch(e => console.log("Áudio bloqueado", e)); }
+            if(audio) { audio.play().catch(e => console.log("Áudio aguardando", e)); }
             showSlide(0);
         }
         
