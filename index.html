@@ -38,8 +38,16 @@
                 <input type="date" id="dataInicio" required>
             </div>
             <div class="input-group">
-                <label>Sua Mensagem de Amor</label>
-                <textarea id="mensagem" rows="3" required placeholder="Escreva um texto lindo contando o que você sente..."></textarea>
+                <label>Link da Foto do Casal (URL da Imagem)</label>
+                <input type="text" id="linkFoto" required placeholder="Cole o link de uma imagem da internet">
+            </div>
+            <div class="input-group">
+                <label>Letra da Música de Vocês</label>
+                <textarea id="letraMusica" rows="3" required placeholder="Cole aqui o trecho da música que representa vocês..."></textarea>
+            </div>
+            <div class="input-group">
+                <label>Sua Mensagem Final de Amor</label>
+                <textarea id="mensagem" rows="3" required placeholder="Escreva uma mensagem especial..."></textarea>
             </div>
             <button type="submit" class="btn-submit">Gerar Presente Grátis ✨</button>
         </form>
@@ -57,9 +65,10 @@
             const n1 = encodeURIComponent(document.getElementById('nome1').value);
             const n2 = encodeURIComponent(document.getElementById('nome2').value);
             const data = encodeURIComponent(document.getElementById('dataInicio').value);
+            const foto = encodeURIComponent(document.getElementById('linkFoto').value);
+            const letra = encodeURIComponent(document.getElementById('letraMusica').value);
             const msg = encodeURIComponent(document.getElementById('mensagem').value);
             
-            // Corrige a geração de caminhos limpando o "index.html" de forma segura
             let local = window.location.pathname;
             if (local.endsWith('index.html')) {
                 local = local.replace('index.html', '');
@@ -68,7 +77,7 @@
                 local += '/';
             }
             
-            const link = window.location.origin + local + "retrospectiva.html?n1=" + n1 + "&n2=" + n2 + "&d=" + data + "&m=" + msg;
+            const link = window.location.origin + local + "retrospectiva.html?n1=" + n1 + "&n2=" + n2 + "&d=" + data + "&f=" + foto + "&l=" + letra + "&m=" + msg;
             
             document.getElementById('linkFinal').innerText = link;
             document.getElementById('linkFinal').href = link;
