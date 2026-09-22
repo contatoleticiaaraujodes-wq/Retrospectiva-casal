@@ -5,47 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sua Retrospectiva Musical 🖤</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Circular', 'Segoe UI', Helvetica, Arial, sans-serif; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Helvetica, Arial, sans-serif; }
         body, html { background-color: #000; height: 100%; width: 100%; overflow: hidden; display: flex; justify-content: center; align-items: center; }
-        
         .story-container { width: 100vw; height: 100vh; position: relative; overflow: hidden; background: #121212; display: flex; flex-direction: column; }
-        
-        /* Marca superior */
         .spotify-header { position: absolute; top: 35px; left: 20px; right: 20px; display: flex; align-items: center; justify-content: space-between; z-index: 11; color: rgba(255,255,255,0.7); font-size: 0.8rem; font-weight: bold; letter-spacing: 1.5px; text-transform: uppercase; }
         .spotify-logo-icon { display: flex; align-items: center; gap: 6px; color: #fff; }
-
-        /* Barras de progresso estilo Stories */
         .progress-container { position: absolute; top: 15px; left: 15px; right: 15px; display: flex; gap: 4px; z-index: 12; }
         .progress-bar { height: 3px; background: rgba(255, 255, 255, 0.2); flex: 1; border-radius: 1px; overflow: hidden; }
         .progress-fill { height: 100%; background: #fff; width: 0%; }
-        
-        /* Slides de Conteúdo */
         .slides { width: 100%; height: 100%; position: relative; }
         .slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.3s ease-in-out; display: flex; flex-direction: column; justify-content: flex-start; padding: 100px 25px 160px 25px; color: #000; z-index: 1; }
         .slide.active { opacity: 1; z-index: 2; }
-        
-        /* Cores temáticas do Spotify Wrapped */
         .slide-1 { background-color: #1ed760; color: #000000; }
         .slide-2 { background-color: #ff4632; color: #ffffff; }
         .slide-3 { background-color: #7d4bfa; color: #ffffff; }
-        
+        .slide-4 { background-color: #121212; color: #ffffff; }
         .slide h2 { font-size: 1.1rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 25px; opacity: 0.9; font-weight: 700; }
         .slide h1 { font-size: 2.8rem; font-weight: 900; line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 20px; }
-        .slide p { font-size: 1.3rem; line-height: 1.4; font-weight: 500; max-width: 90%; }
-        
-        /* Foto do Casal no Slide 2 */
-        .foto-casal-container { width: 160px; height: 160px; margin: 15px auto; border-radius: 12px; overflow: hidden; border: 4px solid #fff; box-shadow: 0 8px 24px rgba(0,0,0,0.3); background: #333; display: flex; justify-content: center; align-items: center; }
-        .foto-casal-container img { width: 100%; height: 100%; object-fit: cover; }
-        .foto-placeholder { font-size: 2rem; }
-
-        /* Estilo da Letra da Música no Slide 3 */
-        .letra-musica-container { background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; text-align: left; margin-top: 15px; border-left: 4px solid #fff; max-height: 180px; overflow-y: auto; }
-        .letra-linha { font-size: 1.3rem; font-weight: 800; line-height: 1.4; margin-bottom: 8px; color: #fff; }
-
-        .number-badge { font-size: 3.5rem; font-weight: 900; line-height: 1; margin: 10px 0; letter-spacing: -2px; display: block; }
-        .sub-text { font-size: 1rem; opacity: 0.85; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
-        
-        /* Player Widget inferior */
+        .slide p { font-size: 1.3rem; line-height: 1.4; font-weight: 500; max-width: 95%; }
+        .number-badge { font-size: 5rem; font-weight: 900; line-height: 1; margin: 25px 0 10px 0; letter-spacing: -3px; display: block; }
+        .sub-text { font-size: 1.1rem; opacity: 0.85; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+        .couple-photo { width: 100%; max-width: 280px; height: 280px; border-radius: 12px; object-fit: cover; margin-top: 15px; box-shadow: 0 8px 24px rgba(0,0,0,0.4); border: 3px solid #fff; display: none; align-self: center; }
         .spotify-player-widget { position: absolute; bottom: 40px; left: 20px; right: 20px; background: rgba(0, 0, 0, 0.85); padding: 15px; border-radius: 12px; display: flex; align-items: center; gap: 15px; z-index: 10; color: #fff; backdrop-filter: blur(10px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); }
         .album-cover { width: 48px; height: 48px; background: linear-gradient(45deg, #7d4bfa, #1ed760); border-radius: 6px; display: flex; justify-content: center; align-items: center; font-size: 1.4rem; }
         .track-info { flex: 1; min-width: 0; }
@@ -53,38 +33,25 @@
         .artist-name { font-size: 0.8rem; color: #b3b3b3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
         .player-bar { position: absolute; bottom: 0; left: 15px; right: 15px; height: 3px; background: rgba(255,255,255,0.2); border-radius: 2px; overflow: hidden; }
         .player-progress { width: 0%; height: 100%; background: #1ed760; }
-
-        /* Toques laterais invisíveis para navegação */
-        .touch-areas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 15; display: flex; pointer-events: none; }
-        .touch-left, .touch-right { height: 100%; pointer-events: auto; cursor: pointer; }
-        .touch-left { width: 30%; -webkit-tap-highlight-color: transparent; }
-        .touch-right { width: 70%; -webkit-tap-highlight-color: transparent; }
-        
-        /* Tela inicial do app */
-        .start-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000000; z-index: 30; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #fff; padding: 40px; text-align: center; box-sizing: border-box; }
+        .touch-areas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 8; display: flex; }
+        .touch-left { height: 100%; width: 30%; -webkit-tap-highlight-color: transparent; }
+        .touch-right { height: 100%; width: 70%; -webkit-tap-highlight-color: transparent; }
+        .start-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000000; z-index: 20; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #fff; padding: 40px; text-align: center; }
         .start-logo { width: 64px; height: 64px; fill: #1ed760; margin-bottom: 30px; }
         .start-screen h3 { font-size: 2rem; font-weight: 900; margin-bottom: 10px; letter-spacing: -0.5px; }
         .start-screen p { color: #a7a7a7; font-size: 1.1rem; margin-bottom: 40px; }
-        .start-btn { background: #1ed760; color: #000; border: none; padding: 16px 36px; font-size: 1.1rem; font-weight: bold; border-radius: 30px; cursor: pointer; transition: transform 0.2s; text-transform: uppercase; letter-spacing: 1px; z-index: 35; }
+        .start-btn { background: #1ed760; color: #000; border: none; padding: 16px 36px; font-size: 1.1rem; font-weight: bold; border-radius: 30px; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; z-index: 30; }
     </style>
 </head>
 <body>
-
     <div class="story-container">
-        <!-- Tela de Abertura -->
         <div class="start-screen" id="startScreen">
-            <svg class="start-logo" viewBox="0 0 24 24">
-                <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424c-.18.295-.565.387-.86.207-2.377-1.454-5.37-1.783-8.892-.982-.336.075-.668-.135-.745-.47-.077-.337.135-.668.47-.745 3.856-.88 7.15-.51 9.822 1.128.296.18.387.563.205.862zm1.225-2.72c-.227.367-.707.487-1.074.26-2.72-1.672-6.87-2.157-10.073-1.185-.413.125-.847-.107-.973-.52a.792.792 0 0 1 .52-.974c3.66-1.11 8.225-.575 11.34 1.343.366.226.486.706.26 1.075zm.105-2.833C14.383 8.8 8.44 8.603 5.004 9.645a1 1 0 1 1-.578-1.916c3.946-1.198 10.512-.973 14.604 1.456a1 1 0 1 1-1.015 1.728z"/>
-            </svg>
+            <svg class="start-logo" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424c-.18.295-.565.387-.86.207-2.377-1.454-5.37-1.783-8.892-.982-.336.075-.668-.135-.745-.47-.077-.337.135-.668.47-.745 3.856-.88 7.15-.51 9.822 1.128.296.18.387.563.205.862zm1.225-2.72c-.227.367-.707.487-1.074.26-2.72-1.672-6.87-2.157-10.073-1.185-.413.125-.847-.107-.973-.52a.792.792 0 0 1 .52-.974c3.66-1.11 8.225-.575 11.34 1.343.366.226.486.706.26 1.075zm.105-2.833C14.383 8.8 8.44 8.603 5.004 9.645a1 1 0 1 1-.578-1.916c3.946-1.198 10.512-.973 14.604 1.456a1 1 0 1 1-1.015 1.728z"/></svg>
             <h3 id="lblTituloEntrada">Seu Wrapped está pronto</h3>
             <p>Uma retrospectiva personalizada da história de vocês dois.</p>
-            <button class="start-btn" id="btnDisparar" onclick="startWrapped()">Mergulhar nela</button>
+            <button class="start-btn" id="btnMergulhar" onclick="startWrapped()">Mergulhar nela</button>
         </div>
-
-        <!-- Progresso superior -->
         <div class="progress-container" id="progressContainer"></div>
-
-        <!-- Cabeçalho -->
         <div class="spotify-header">
             <div class="spotify-logo-icon">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424c-.18.295-.565.387-.86.207-2.377-1.454-5.37-1.783-8.892-.982-.336.075-.668-.135-.745-.47-.077-.337.135-.668.47-.745 3.856-.88 7.15-.51 9.822 1.128.296.18.387.563.205.862zm1.225-2.72c-.227.367-.707.487-1.074.26-2.72-1.672-6.87-2.157-10.073-1.185-.413.125-.847-.107-.973-.52a.792.792 0 0 1 .52-.974c3.66-1.11 8.225-.575 11.34 1.343.366.226.486.706.26 1.075zm.105-2.833C14.383 8.8 8.44 8.603 5.004 9.645a1 1 0 1 1-.578-1.916c3.946-1.198 10.512-.973 14.604 1.456a1 1 0 1 1-1.015 1.728z"/></svg>
@@ -92,44 +59,136 @@
             </div>
             <div id="anoAtual">2026</div>
         </div>
-
         <div class="touch-areas">
             <div class="touch-left" onclick="prevSlide()"></div>
             <div class="touch-right" onclick="nextSlide()"></div>
         </div>
-
         <div class="slides">
-            <!-- Slide 1 -->
             <div class="slide slide-1 active">
                 <h2>Sua Dupla Do Ano</h2>
                 <h1 id="txtBoasVindas">Oi, Meu Amor!</h1>
-                <p>Nenhuma playlist explicaria tudo o que vivemos juntos. Prepare o coração para rever a nossa linda caminhada.</p>
+                <p>Nenhuma playlist explicaria tudo o que vivemos juntos. Prepare o coração para rever os nossos momentos mais marcantes.</p>
             </div>
-            
-            <!-- Slide 2 (Com espaço para Foto) -->
             <div class="slide slide-2">
                 <h2>Minutos de Sintonia</h2>
                 <h1>Seu par mais ouvido</h1>
-                
-                <div class="foto-casal-container">
-                    <!-- Substitua o link entre aspas pelo link da sua foto real quando quiser -->
-                    <img id="imgFoto" src="https://unsplash.com" alt="Foto do Casal">
-                </div>
-
-                <p>Nós já somamos exatos:</p>
+                <p>Desde que demos o play nessa linda história, nós já somamos exatos:</p>
                 <span class="highlight number-badge" id="txtDias">0</span>
                 <span class="sub-text">Dias de conexão e parceria única</span>
             </div>
-            
-            <!-- Slide 3 (Com espaço para Letra da Música) -->
             <div class="slide slide-3">
-                <h2>Letra da Música</h2>
-                <h1>Nossa trilha sonora</h1>
-                <p id="txtMensagem">Mensagem curta</p>
-                
-                <div class="letra-musica-container">
-                    <div class="letra-linha">Conheci o amor</div>
-                    <div class="letra-linha">E ele me trouxe você</div>
-                    <div class="letra-linha">Cada compasso do dia</div>
-                    <div class="letra-linha">É melhor com você... 🖤</div>
-                </div>
+                <h2>Letra Marcante</h2>
+                <h1 style="font-size: 2rem; margin-bottom: 10px;">A nossa canção</h1>
+                <p id="txtLetra" style="font-style: italic; font-weight: 700; color: #fff; font-size: 1.1rem; margin-bottom: 10px;"></p>
+                <img id="imgCasal" class="couple-photo" src="" alt="Foto do Casal">
+            </div>
+            <div class="slide slide-4">
+                <h2>Dedicatória</h2>
+                <h1>Para você, com amor</h1>
+                <p id="txtMensagem" style="font-size: 1.4rem; line-height: 1.4; font-weight: 600;">Sua mensagem vai carregar aqui.</p>
+            </div>
+        </div>
+        <div class="spotify-player-widget">
+            <div class="album-cover">❤️</div>
+            <div class="track-info">
+                <div class="track-name" id="widgetMusica">Nossa Canção Preferida</div>
+                <div class="artist-name">Playlist: O Amor da Minha Vida</div>
+            </div>
+            <div class="player-bar">
+                <div class="player-progress" id="widgetProgressBar"></div>
+            </div>
+        </div>
+    </div>
+    <audio id="bgMusic" src="https://soundhelix.com" loop></audio>
+    <script>
+        document.getElementById('anoAtual').innerText = new Date().getFullYear();
+        const params = new URLSearchParams(window.location.search);
+        const nome1 = params.get('n1') || "Eu";
+        const nome2 = params.get('n2') || "Você";
+        const dataInicio = params.get('d');
+        const fotoUrl = params.get('f');
+        const letraMusica = params.get('l') || "Tudo fica melhor quando estamos juntos.";
+        const mensagem = params.get('m') || "Eu te amo muito em cada compasso do dia!";
+        
+        document.getElementById('txtBoasVindas').innerText = `Oi, ${nome2}!`;
+        document.getElementById('lblTituloEntrada').innerText = `${nome2}, seu Wrapped está pronto`;
+        document.getElementById('txtLetra').innerText = `"${letraMusica}"`;
+        document.getElementById('txtMensagem').innerText = mensagem;
+        document.getElementById('widgetMusica').innerText = `História de ${nome1} & ${nome2}`;
+        
+        if (fotoUrl && fotoUrl.trim() !== "") {
+            const imgElement = document.getElementById('imgCasal');
+            imgElement.src = decodeURIComponent(fotoUrl);
+            imgElement.style.display = 'block';
+        }
+        
+        if (dataInicio) {
+            const dataObjeto = new Date(dataInicio);
+            const dataHoje = new Date();
+            const diferencaBruta = dataHoje.getTime() - dataObjeto.getTime();
+            const diasFinais = Math.floor(diferencaBruta / (1000 * 60 * 60 * 24));
+            document.getElementById('txtDias').innerText = diasFinais > 0 ? diasFinais : 0;
+        }
+        
+        const slides = document.querySelectorAll('.slide');
+        const duration = 6500; 
+        let currentIdx = 0;
+        let progressInterval;
+        let startTime;
+        const progressContainer = document.getElementById('progressContainer');
+        
+        slides.forEach((_, i) => {
+            const bar = document.createElement('div');
+            bar.className = 'progress-bar';
+            bar.innerHTML = `<div class="progress-fill" id="fill-${i}"></div>`;
+            progressContainer.appendChild(bar);
+        });
+        
+        function startWrapped() {
+            document.getElementById('startScreen').style.display = 'none';
+            const audio = document.getElementById('bgMusic');
+            if(audio) { audio.play().catch(e => console.log("Áudio bloqueado", e)); }
+            showSlide(0);
+        }
+        
+        function showSlide(index) {
+            clearInterval(progressInterval);
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                const fill = document.getElementById(`fill-${i}`);
+                if (i < index) fill.style.width = '100%';
+                else fill.style.width = '0%';
+            });
+            currentIdx = index;
+            slides[currentIdx].classList.add('active');
+            startTime = Date.now();
+            progressInterval = setInterval(() => {
+                const fill = document.getElementById(`fill-${currentIdx}`);
+                const pct = ((Date.now() - startTime) / duration) * 100;
+                document.getElementById('widgetProgressBar').style.width = `${pct}%`;
+                if (pct >= 100) {
+                    fill.style.width = '100%';
+                    clearInterval(progressInterval);
+                    nextSlide();
+                } else {
+                    fill.style.width = `${pct}%`;
+                }
+            }, 30);
+        }
+        
+        function nextSlide() {
+            if (currentIdx < slides.length - 1) { showSlide(currentIdx + 1); } 
+            else {
+                clearInterval(progressInterval);
+                document.getElementById(`fill-${slides.length - 1}`).style.width = '100%';
+                document.getElementById('widgetProgressBar').style.width = '100%';
+            }
+        }
+        
+        function prevSlide() {
+            if (currentIdx > 0) { showSlide(currentIdx - 1); } 
+            else { showSlide(0); }
+        }
+    </script>
+</body>
+</html>
