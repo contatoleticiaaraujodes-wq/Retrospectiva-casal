@@ -59,9 +59,17 @@
             const data = encodeURIComponent(document.getElementById('dataInicio').value);
             const msg = encodeURIComponent(document.getElementById('mensagem').value);
             
-            // Monta os dados na URL. Quando você subir para o GitHub, ele usará a pasta correta automaticamente.
-            const pastaPadrao = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" ? "" : "/retrospectiva-casal";
-            const link = window.location.origin + pastaPadrao + "/retrospectiva.html?n1=" + n1 + "&n2=" + n2 + "&d=" + data + "&m=" + msg;
+            // CORREÇÃO DO BUG: Remove o "index.html" do link atual e adiciona o "retrospectiva.html" de forma 100% segura
+            let urlAtual = window.location.href.split('?')[0];
+            if (urlAtual.endsWith('index.html')) {
+                urlAtual = urlAtual.replace('index.html', 'retrospectiva.html');
+            } else if (urlAtual.endsWith('/')) {
+                urlAtual = urlAtual + 'retrospectiva.html';
+            } else {
+                urlAtual = urlAtual + '/retrospectiva.html';
+            }
+            
+            const link = urlAtual + "?n1=" + n1 + "&n2=" + n2 + "&d=" + data + "&m=" + msg;
             
             document.getElementById('linkFinal').innerText = link;
             document.getElementById('linkFinal').href = link;
