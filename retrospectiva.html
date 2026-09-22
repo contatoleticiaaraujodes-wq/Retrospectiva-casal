@@ -100,7 +100,7 @@
         </div>
     </div>
     <audio id="bgMusic" src="https://soundhelix.com" loop></audio>
-    <script>
+              <script>
         document.getElementById('anoAtual').innerText = new Date().getFullYear();
         const params = new URLSearchParams(window.location.search);
         const nome1 = params.get('n1') || "Eu";
@@ -122,11 +122,20 @@
             imgElement.style.display = 'block';
         }
         
+        // CÁLCULO CORRIGIDO: Força a comparação exata desconsiderando horas e fusos
         if (dataInicio) {
-            const dataObjeto = new Date(dataInicio);
-            const dataHoje = new Date();
-            const diferencaBruta = dataHoje.getTime() - dataObjeto.getTime();
-            const diasFinais = Math.floor(diferencaBruta / (1000 * 60 * 60 * 24));
+            // Divide a data do formulário (ano-mes-dia)
+            const partes = dataInicio.split('-'); 
+            // Cria a data inicial usando o fuso local do dispositivo
+            const dataObjeto = new Date(partes[0], partes[1] - 1, partes[2]); 
+            
+            const hoje = new Date();
+            // Zera as horas de hoje para comparar apenas os dias cheios
+            const hojeZerado = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
+            
+            const diferencaBruta = hojeZerado.getTime() - dataObjeto.getTime();
+            const diasFinais = Math.ceil(diferencaBruta / (1000 * 60 * 60 * 24));
+            
             document.getElementById('txtDias').innerText = diasFinais > 0 ? diasFinais : 0;
         }
         
