@@ -106,7 +106,6 @@
         const nome1 = params.get('n1') || "Eu";
         const nome2 = params.get('n2') || "Você";
         const dataInicio = params.get('d');
-        const fotoUrl = params.get('f');
         const letraMusica = params.get('l') || "Tudo fica melhor quando estamos juntos.";
         const mensagem = params.get('m') || "Eu te amo muito em cada compasso do dia!";
         
@@ -115,12 +114,6 @@
         document.getElementById('txtLetra').innerText = `"${letraMusica}"`;
         document.getElementById('txtMensagem').innerText = mensagem;
         document.getElementById('widgetMusica').innerText = `História de ${nome1} & ${nome2}`;
-        if (fotoUrl && fotoUrl.trim() !== "") {
-            const imgElement = document.getElementById('imgCasal');
-            imgElement.src = decodeURIComponent(fotoUrl);
-            imgElement.style.display = 'block';
-        }
-        
         if (dataInicio) {
             const partes = dataInicio.split('-'); 
             const ano = parseInt(partes[0], 10);
