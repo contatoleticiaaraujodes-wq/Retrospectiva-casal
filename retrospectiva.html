@@ -28,23 +28,22 @@
         .slide-1 { background-color: #1ed760; color: #000000; }
         .slide-2 { background-color: #ff4632; color: #ffffff; }
         .slide-3 { background-color: #7d4bfa; color: #ffffff; }
-        .slide-4 { background-color: #f13ca2; color: #ffffff; }
         
         .slide h2 { font-size: 1.1rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 25px; opacity: 0.9; font-weight: 700; }
-        .slide h1 { font-size: 3rem; font-weight: 900; line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 20px; }
-        .slide p { font-size: 1.4rem; line-height: 1.4; font-weight: 500; max-width: 90%; }
+        .slide h1 { font-size: 2.8rem; font-weight: 900; line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 20px; }
+        .slide p { font-size: 1.3rem; line-height: 1.4; font-weight: 500; max-width: 90%; }
         
-        .number-badge { font-size: 5rem; font-weight: 900; line-height: 1; margin: 30px 0 10px 0; letter-spacing: -3px; display: block; }
-        .sub-text { font-size: 1.1rem; opacity: 0.85; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
-        
-        /* Estilo da Letra da Música (Slide 3) */
-        .lyrics-container { width: 100%; margin-top: 10px; text-align: left; }
-        .lyric-line { font-size: 1.8rem; font-weight: 900; line-height: 1.3; margin-bottom: 12px; color: rgba(255,255,255,0.5); transition: color 0.3s; }
-        .lyric-line.active-lyric { color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
+        /* Foto do Casal no Slide 2 */
+        .foto-casal-container { width: 160px; height: 160px; margin: 15px auto; border-radius: 12px; overflow: hidden; border: 4px solid #fff; box-shadow: 0 8px 24px rgba(0,0,0,0.3); background: #333; display: flex; justify-content: center; align-items: center; }
+        .foto-casal-container img { width: 100%; height: 100%; object-fit: cover; }
+        .foto-placeholder { font-size: 2rem; }
 
-        /* Estilo da Foto do Casal (Slide 4) */
-        .photo-frame { width: 100%; max-width: 320px; height: 320px; margin: 15px auto 0 auto; border-radius: 12px; border: 4px solid #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.4); overflow: hidden; background-color: #222; display: flex; justify-content: center; align-items: center; }
-        .photo-frame img { width: 100%; height: 100%; object-fit: cover; }
+        /* Estilo da Letra da Música no Slide 3 */
+        .letra-musica-container { background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; text-align: left; margin-top: 15px; border-left: 4px solid #fff; max-height: 180px; overflow-y: auto; }
+        .letra-linha { font-size: 1.3rem; font-weight: 800; line-height: 1.4; margin-bottom: 8px; color: #fff; }
+
+        .number-badge { font-size: 3.5rem; font-weight: 900; line-height: 1; margin: 10px 0; letter-spacing: -2px; display: block; }
+        .sub-text { font-size: 1rem; opacity: 0.85; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
         
         /* Player Widget inferior */
         .spotify-player-widget { position: absolute; bottom: 40px; left: 20px; right: 20px; background: rgba(0, 0, 0, 0.85); padding: 15px; border-radius: 12px; display: flex; align-items: center; gap: 15px; z-index: 10; color: #fff; backdrop-filter: blur(10px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); }
@@ -56,16 +55,17 @@
         .player-progress { width: 0%; height: 100%; background: #1ed760; }
 
         /* Toques laterais invisíveis para navegação */
-        .touch-areas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 8; display: flex; }
-        .touch-left { height: 100%; width: 30%; -webkit-tap-highlight-color: transparent; }
-        .touch-right { height: 100%; width: 70%; -webkit-tap-highlight-color: transparent; }
+        .touch-areas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 15; display: flex; pointer-events: none; }
+        .touch-left, .touch-right { height: 100%; pointer-events: auto; cursor: pointer; }
+        .touch-left { width: 30%; -webkit-tap-highlight-color: transparent; }
+        .touch-right { width: 70%; -webkit-tap-highlight-color: transparent; }
         
         /* Tela inicial do app */
-        .start-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000000; z-index: 20; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #fff; padding: 40px; text-align: center; }
+        .start-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000000; z-index: 30; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #fff; padding: 40px; text-align: center; box-sizing: border-box; }
         .start-logo { width: 64px; height: 64px; fill: #1ed760; margin-bottom: 30px; }
         .start-screen h3 { font-size: 2rem; font-weight: 900; margin-bottom: 10px; letter-spacing: -0.5px; }
         .start-screen p { color: #a7a7a7; font-size: 1.1rem; margin-bottom: 40px; }
-        .start-btn { background: #1ed760; color: #000; border: none; padding: 16px 36px; font-size: 1.1rem; font-weight: bold; border-radius: 30px; cursor: pointer; transition: transform 0.2s; text-transform: uppercase; letter-spacing: 1px; }
+        .start-btn { background: #1ed760; color: #000; border: none; padding: 16px 36px; font-size: 1.1rem; font-weight: bold; border-radius: 30px; cursor: pointer; transition: transform 0.2s; text-transform: uppercase; letter-spacing: 1px; z-index: 35; }
     </style>
 </head>
 <body>
@@ -78,7 +78,7 @@
             </svg>
             <h3 id="lblTituloEntrada">Seu Wrapped está pronto</h3>
             <p>Uma retrospectiva personalizada da história de vocês dois.</p>
-            <button class="start-btn" onclick="startWrapped()">Mergulhar nela</button>
+            <button class="start-btn" id="btnDisparar" onclick="startWrapped()">Mergulhar nela</button>
         </div>
 
         <!-- Progresso superior -->
@@ -93,44 +93,43 @@
             <div id="anoAtual">2026</div>
         </div>
 
-        <!-- Áreas de toque para passar/voltar -->
         <div class="touch-areas">
             <div class="touch-left" onclick="prevSlide()"></div>
             <div class="touch-right" onclick="nextSlide()"></div>
         </div>
 
-        <!-- Lista de Slides -->
         <div class="slides">
-            <!-- Slide 1: Apresentação -->
+            <!-- Slide 1 -->
             <div class="slide slide-1 active">
                 <h2>Sua Dupla Do Ano</h2>
                 <h1 id="txtBoasVindas">Oi, Meu Amor!</h1>
                 <p>Nenhuma playlist explicaria tudo o que vivemos juntos. Prepare o coração para rever a nossa linda caminhada.</p>
             </div>
             
-            <!-- Slide 2: Contador de Tempo -->
+            <!-- Slide 2 (Com espaço para Foto) -->
             <div class="slide slide-2">
                 <h2>Minutos de Sintonia</h2>
                 <h1>Seu par mais ouvido</h1>
-                <p>Desde que demos o play nessa linda história, nós já somamos exatos:</p>
+                
+                <div class="foto-casal-container">
+                    <!-- Substitua o link entre aspas pelo link da sua foto real quando quiser -->
+                    <img id="imgFoto" src="https://unsplash.com" alt="Foto do Casal">
+                </div>
+
+                <p>Nós já somamos exatos:</p>
                 <span class="highlight number-badge" id="txtDias">0</span>
                 <span class="sub-text">Dias de conexão e parceria única</span>
             </div>
             
-            <!-- Slide 3: Letra da Música Dinâmica -->
+            <!-- Slide 3 (Com espaço para Letra da Música) -->
             <div class="slide slide-3">
-                <h2>Trilha Sonora</h2>
-                <h1>A nossa letra</h1>
-                <div class="lyrics-container">
-                    <div class="lyric-line active-lyric" id="linhaMusica1">Carregando trecho 1...</div>
-                    <div class="lyric-line" id="linhaMusica2">Carregando trecho 2...</div>
-                    <div class="lyric-line" id="linhaMusica3">Carregando trecho 3...</div>
+                <h2>Letra da Música</h2>
+                <h1>Nossa trilha sonora</h1>
+                <p id="txtMensagem">Mensagem curta</p>
+                
+                <div class="letra-musica-container">
+                    <div class="letra-linha">Conheci o amor</div>
+                    <div class="letra-linha">E ele me trouxe você</div>
+                    <div class="letra-linha">Cada compasso do dia</div>
+                    <div class="letra-linha">É melhor com você... 🖤</div>
                 </div>
-            </div>
-
-            <!-- Slide 4: Foto e Dedicatória Final -->
-            <div class="slide slide-4">
-                <h2>Retrato do Ano</h2>
-                <h1>Nossa melhor foto</h1>
-                <div class="photo-frame">
-                    <!-- A foto enviada via URL carrega aqui -->
