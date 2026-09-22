@@ -59,17 +59,16 @@
             const data = encodeURIComponent(document.getElementById('dataInicio').value);
             const msg = encodeURIComponent(document.getElementById('mensagem').value);
             
-            // CORREÇÃO DO BUG: Remove o "index.html" do link atual e adiciona o "retrospectiva.html" de forma 100% segura
-            let urlAtual = window.location.href.split('?')[0];
-            if (urlAtual.endsWith('index.html')) {
-                urlAtual = urlAtual.replace('index.html', 'retrospectiva.html');
-            } else if (urlAtual.endsWith('/')) {
-                urlAtual = urlAtual + 'retrospectiva.html';
-            } else {
-                urlAtual = urlAtual + '/retrospectiva.html';
+            // Pega o endereço base do site (ex: https://.../Retrospectiva-casual/) de forma limpa
+            let local = window.location.pathname;
+            if (local.endsWith('index.html')) {
+                local = local.replace('index.html', '');
+            }
+            if (!local.endsWith('/')) {
+                local += '/';
             }
             
-            const link = urlAtual + "?n1=" + n1 + "&n2=" + n2 + "&d=" + data + "&m=" + msg;
+            const link = window.location.origin + local + "retrospectiva.html?n1=" + n1 + "&n2=" + n2 + "&d=" + data + "&m=" + msg;
             
             document.getElementById('linkFinal').innerText = link;
             document.getElementById('linkFinal').href = link;
