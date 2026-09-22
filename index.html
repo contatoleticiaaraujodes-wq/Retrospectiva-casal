@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Retrospectiva Grátis ✨</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background: #121212; color: #fff; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .form-container { background: #1e1e1e; padding: 30px; border-radius: 12px; width: 100%; max-width: 500px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        h2 { margin-bottom: 20px; color: #f72585; text-align: center; font-weight: 800; }
+        .input-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-size: 0.9rem; color: #ccc; }
+        input[type="text"], input[type="date"], textarea { width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #333; background: #2a2a2a; color: #fff; font-size: 1rem; }
+        input:focus, textarea:focus { border-color: #f72585; outline: none; }
+        .btn-submit { background: #f72585; color: #fff; border: none; width: 100%; padding: 15px; font-size: 1.1rem; font-weight: bold; border-radius: 6px; cursor: pointer; margin-top: 10px; transition: background 0.2s; }
+        .btn-submit:hover { background: #b5179e; }
+        .result-box { display: none; background: #2a2a2a; border-left: 5px solid #4cc9f0; padding: 15px; margin-top: 20px; border-radius: 4px; }
+        .link-gerado { color: #4cc9f0; font-weight: bold; word-break: break-all; margin-top: 10px; display: block; text-decoration: none; font-size: 0.95rem; }
+        .link-gerado:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Crie Sua Retrospectiva</h2>
+        <form id="wrappedForm" onsubmit="gerarPresente(event)">
+            <div class="input-group">
+                <label>Seu Nome</label>
+                <input type="text" id="nome1" required placeholder="Ex: João">
+            </div>
+            <div class="input-group">
+                <label>Nome do seu Amor</label>
+                <input type="text" id="nome2" required placeholder="Ex: Maria">
+            </div>
+            <div class="input-group">
+                <label>Data de Início do Relacionamento</label>
+                <input type="date" id="dataInicio" required>
+            </div>
+            <div class="input-group">
+                <label>Sua Mensagem de Amor</label>
+                <textarea id="mensagem" rows="3" required placeholder="Escreva um texto lindo contando o que você sente..."></textarea>
+            </div>
+            <button type="submit" class="btn-submit">Gerar Presente Grátis ✨</button>
+        </form>
+
+        <div class="result-box" id="resultBox">
+            <p>🎉 <strong>Seu presente está pronto!</strong> Copie o link abaixo e envie para o seu amor:</p>
+            <a href="#" id="linkFinal" class="link-gerado" target="_blank"></a>
+        </div>
+    </div>
+
+    <script>
+        function gerarPresente(event) {
+            event.preventDefault();
+            
+            const n1 = encodeURIComponent(document.getElementById('nome1').value);
+            const n2 = encodeURIComponent(document.getElementById('nome2').value);
+            const data = encodeURIComponent(document.getElementById('dataInicio').value);
+            const msg = encodeURIComponent(document.getElementById('mensagem').value);
+            
+            // Monta os dados na URL. Quando você subir para o GitHub, ele usará a pasta correta automaticamente.
+            const pastaPadrao = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" ? "" : "/retrospectiva-casal";
+            const link = window.location.origin + pastaPadrao + "/retrospectiva.html?n1=" + n1 + "&n2=" + n2 + "&d=" + data + "&m=" + msg;
+            
+            document.getElementById('linkFinal').innerText = link;
+            document.getElementById('linkFinal').href = link;
+            document.getElementById('resultBox').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
